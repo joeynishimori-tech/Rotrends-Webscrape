@@ -14,9 +14,9 @@ import time
 import requests
 from bs4 import BeautifulSoup
 from bs4 import XMLParsedAsHTMLWarning
-
 import warnings
 warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning)
+# Using this to remove error when parsing XML
 
 def scrape_sitemap(sitemap_url):
     """
@@ -35,6 +35,8 @@ def scrape_sitemap(sitemap_url):
     urls = [loc.text for loc in soup.find_all('loc')]
 
     return urls
+
+# Begin scraping page by using CLASS_NAME
 def scrapesite(driver_yay):
     time.sleep(2)
     print("scraping page: ")
@@ -67,8 +69,7 @@ def chunk_list(input_list, chunk_size):
     """
     return [input_list[ie:ie + chunk_size] for ie in range(0, len(input_list), chunk_size)]
 
-# Example usage
-sitemap_url = 'https://rotrends.com/games/sitemap.xml' # Replace with the target sitemap URL
+sitemap_url = 'https://rotrends.com/games/sitemap.xml' 
 try:
     page_urls = scrape_sitemap(sitemap_url)
     print(f"Found {len(page_urls)} URLs in the sitemap.")
@@ -99,6 +100,7 @@ driver.get(url)
 # Get the page source after JavaScript has executed
 #select = Select(driver.find_element('class', 'ant-table-cell'))
 time.sleep(5)
+
 xpath_menu = {"/html/body/div[3]/div/ul/li[1]","/html/body/div[3]/div/ul/li[3]", "/html/body/div[3]/div/ul/li[4]","/html/body/div[3]/div/ul/li[6]" "/html/body/div[3]/div/ul/li[7]","/html/body/div[3]/div/ul/li[8]","/html/body/div[3]/div/ul/li[9]","/html/body/div[3]/div/ul/li[10]",
               "/html/body/div[3]/div/ul/li[11]","/html/body/div[3]/div/ul/li[12]"
 , "/html/body/div[3]/div/ul/li[13]"
@@ -129,6 +131,7 @@ for path in xpath_menu:
         target_element.click()
         print("\n")
         i = i + 1
+        # Print used as a checker to see how many subsections it clicks
         print(i)
 
 
@@ -167,6 +170,7 @@ for pages in page_total:
 
     print(len(data_list) / (i + 1))
 
+# Turn single list of data into a proper list of arrays.
 chunks = chunk_list(data_list, i+1)
 print(chunks[0])
 print(len(chunks))
